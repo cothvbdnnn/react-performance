@@ -16,12 +16,12 @@ const AwesomeImage = ({ src, width = 300, height = 200 }) => {
   )
 }
 
-const HoverOpacity = Component => function NewComponent(props) {
+const HoverOpacity = (Component, opacity) => function NewComponent(props) {
   const [isHovered, setIsHovered] = useState()
   return (
     <div
       style={{
-        opacity: isHovered ? 0.5 : 1
+        opacity: isHovered ? opacity : 1
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -31,12 +31,10 @@ const HoverOpacity = Component => function NewComponent(props) {
   )
 };
 
-const HOC = HoverOpacity(AwesomeImage)
+const HOC = HoverOpacity(AwesomeImage, 0.8)
 
 export default function WrappedComponent() {
   return (
-    <HoverOpacity>
-      <HOC src="https://picsum.photos/200/300" />
-    </HoverOpacity>
+    <HOC src="https://picsum.photos/200/300" />
   )
 }
