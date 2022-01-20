@@ -1,23 +1,15 @@
 import { useState } from 'react'
 
-const AwesomeImage = ({ src, width = 300, height = 200 }) => {
+const Image = ({ src, alt }) => {
   return (
-    <div
-      className="awesome-image"
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        backgroundImage: `url(${src})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        borerRadius: '8px'
-      }}
-    />
+    <img src={src} alt={alt} />
   )
 }
 
-const HoverOpacity = (Component, opacity) => function NewComponent(props) {
+const HoverOpacity = Component => function NewComponent(props) {
   const [isHovered, setIsHovered] = useState()
+  const { opacity, alt, ...rest } = props
+  const formatAlt = alt.toLowerCase().replaceAll(' ', '-')
   return (
     <div
       style={{
@@ -26,15 +18,15 @@ const HoverOpacity = (Component, opacity) => function NewComponent(props) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Component {...props} />
+      <Component {...rest} alt={formatAlt} />
     </div>
   )
 };
 
-const HOC = HoverOpacity(AwesomeImage, 0.8)
+const HOC = HoverOpacity(Image)
 
 export default function WrappedComponent() {
   return (
-    <HOC src="https://picsum.photos/200/300" />
+    <HOC src="https://picsum.photos/200/300" opacity={0.8} alt="Image 1" />
   )
 }
